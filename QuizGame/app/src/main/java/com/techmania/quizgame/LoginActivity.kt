@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
@@ -18,6 +19,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.techmania.quizgame.databinding.ActivityLoginBinding
+import java.io.InputStream
 
 class LoginActivity : AppCompatActivity() {
 
@@ -35,39 +37,41 @@ class LoginActivity : AppCompatActivity() {
         val view = loginBinding.root
         setContentView(view)
 
-        val textOfGoogleButton = loginBinding.buttonGoogleSignin.getChildAt(0) as TextView
-        textOfGoogleButton.text = "Continue with Google"
-        textOfGoogleButton.setTextColor(Color.BLACK)
-        textOfGoogleButton.textSize = 18F
+//        val textOfGoogleButton = loginBinding.buttonGoogleSignin.getChildAt(0) as TextView
+//        textOfGoogleButton.text = "Continue with Google"
+//        textOfGoogleButton.setTextColor(Color.BLACK)
+//        textOfGoogleButton.textSize = 18F
 
         //register
-        registerActivityForGoogleSignIn()
+//        registerActivityForGoogleSignIn()
+//
+//        loginBinding.buttonSignin.setOnClickListener {
+//
+//            val userEmail = loginBinding.editTextLoginEmail.text.toString()
+//            val userPassword = loginBinding.editTextLoginPassword.text.toString()
+//
+//            signInUser(userEmail, userPassword)
+//
+//        }
+//        loginBinding.buttonGoogleSignin.setOnClickListener {
+//
+//            signInGoogle()
+//
+//        }
+//        loginBinding.textViewSignup.setOnClickListener {
+//
+//            val intent = Intent(this,SignupActivity::class.java)
+//            startActivity(intent)
+//
+//        }
+//        loginBinding.textViewForgotPassword.setOnClickListener {
+//
+//            val intent = Intent(this,ForgotPasswordActivity::class.java)
+//            startActivity(intent)
+//
+//        }
 
-        loginBinding.buttonSignin.setOnClickListener {
-
-            val userEmail = loginBinding.editTextLoginEmail.text.toString()
-            val userPassword = loginBinding.editTextLoginPassword.text.toString()
-
-            signInUser(userEmail, userPassword)
-
-        }
-        loginBinding.buttonGoogleSignin.setOnClickListener {
-
-            signInGoogle()
-
-        }
-        loginBinding.textViewSignup.setOnClickListener {
-
-            val intent = Intent(this,SignupActivity::class.java)
-            startActivity(intent)
-
-        }
-        loginBinding.textViewForgotPassword.setOnClickListener {
-
-            val intent = Intent(this,ForgotPasswordActivity::class.java)
-            startActivity(intent)
-
-        }
+        getJson()
 
     }
 
@@ -173,6 +177,17 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
+
+    }
+
+    fun getJson() {
+
+        var json : String ? = null
+
+        val inputStream: InputStream = assets.open("env.Dev.json")
+        json = inputStream.bufferedReader().use{it.readText()}
+        Log.d("Testing", "$json")
+        loginBinding.testText.text = json
 
     }
 

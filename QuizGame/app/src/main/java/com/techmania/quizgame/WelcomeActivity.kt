@@ -5,9 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import com.techmania.quizgame.databinding.ActivityWelcomeBinding
+import java.io.InputStream
 
 class WelcomeActivity : AppCompatActivity() {
 
@@ -34,4 +35,5 @@ class WelcomeActivity : AppCompatActivity() {
         },5000)
 
     }
+
 }

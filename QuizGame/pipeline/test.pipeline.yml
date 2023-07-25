@@ -1,0 +1,31 @@
+pool:
+  vmImage: 'macOS-latest'
+
+steps:
+  - task: Gradle@2
+    inputs:
+      workingDirectory: ''
+      gradleWrapperFile: 'gradlew'
+      gradleOptions: '-Xmx3072m'
+      publishJUnitResults: false
+      testResultsFiles: '**/TEST-*.xml'
+      tasks: 'assembleDebug'
+
+  - script: |
+      echo "System.DefaultWorkingDirectory is："
+      echo "$(System.DefaultWorkingDirectory)"
+    displayName: 'Print value of System.DefaultWorkingDirectory'
+
+  - task: CopyFiles@2
+    inputs:
+      contents: '**/*.apk'
+      flattenFolders: true
+      targetFolder: '$(build.artifactStagingDirectory)'
+    displayName: Copy .apk files to artifact staging directory
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: '$(build.artifactStagingDirectory)'
+      artifactName: 'apks'
+      artifactType: 'container'
+    displayName: Publish apks in an artifact
